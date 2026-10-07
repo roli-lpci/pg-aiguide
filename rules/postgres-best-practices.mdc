@@ -15,6 +15,7 @@ When writing or reviewing SQL, designing schemas, or working with PostgreSQL:
 - Use `search_docs` with source `tiger` when working with TimescaleDB or Tiger Cloud features.
 - Before designing tables, invoke the `design-postgres-tables` skill for data type, constraint, and indexing guidance.
 - For time-series, IoT, or event data on TimescaleDB, invoke the `setup-timescaledb-hypertables` skill.
+- For percentiles, rates, time-weighted averages, uptime, or state durations on TimescaleDB, invoke the `timescaledb-hyperfunctions` skill.
 - When adding vector search with pgvector, invoke the `pgvector-semantic-search` skill.
 - When combining keyword and semantic search, invoke the `postgres-hybrid-text-search` skill.
 - Prefer `search_type: "semantic"` for natural-language questions and `search_type: "keyword"` for exact term lookups.
