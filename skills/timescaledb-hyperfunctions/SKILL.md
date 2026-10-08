@@ -1,15 +1,15 @@
 ---
 name: timescaledb-hyperfunctions
 description: |
-  Use this skill when writing analytical SQL over time-series data with the TimescaleDB Toolkit (timescaledb_toolkit extension) hyperfunctions: approximate percentiles, statistical summaries, time-weighted averages, counter/gauge rates, uptime/heartbeat tracking, state durations, OHLC candlesticks, approximate distinct counts, top-N, and downsampling.
+  Use this skill when writing analytical SQL over time-series data with the TimescaleDB Toolkit (timescaledb_toolkit extension) hyperfunctions.
 
   **Trigger when user asks to:**
-  - Compute percentiles/medians/p95/p99 over large or rolled-up time-series data
+  - Compute percentiles/medians/p95/p99 or statistical summaries over large or rolled-up time-series data
   - Compute rates or deltas from monotonic counters (Prometheus-style) or gauges
   - Compute time-weighted averages or integrals over irregularly sampled data
   - Track uptime/downtime from heartbeats, or time spent in each state
   - Build OHLC/candlestick or VWAP data for financial ticks
-  - Store re-aggregatable summaries in continuous aggregates (two-step aggregation, rollup)
+  - Store re-aggregatable summaries in continuous aggregates
   - Approximate COUNT DISTINCT, find top-N / most frequent values, or downsample for charts
 
   **Keywords:** timescaledb_toolkit, hyperfunctions, percentile_agg, uddsketch, tdigest, approx_percentile, stats_agg, time_weight, counter_agg, gauge_agg, heartbeat_agg, state_agg, candlestick_agg, hyperloglog, approx_count_distinct, min_n, max_n, mcv_agg, lttb, asap_smooth, rollup, two-step aggregation
