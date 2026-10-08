@@ -11,6 +11,7 @@
 
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { basename, join } from 'node:path';
+import matter from 'gray-matter';
 
 const SKILLS_DIR = join(import.meta.dirname, '..', 'skills');
 const NAME_REGEX = /^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/;
@@ -25,26 +26,21 @@ interface ValidationError {
 }
 
 function parseFrontmatter(content: string): Record<string, string> | null {
-  const match = content.match(/^---\n([\s\S]*?)\n---/);
-  if (!match) return null;
+  if (!/^---\n[\s\S]*?\n---/.test(content)) return null;
+
+  // Parse with a real YAML parser so multi-line (block scalar) values are
+  // measured in full, not just up to the end of their first line.
+  let data: Record<string, unknown>;
+  try {
+    data = matter(content).data;
+  } catch {
+    return null;
+  }
 
   const fm: Record<string, string> = {};
-  const raw = match[1];
-  if (!raw) return fm;
-
-  // Extract name (single line)
-  const nameMatch = raw.match(/^name:\s*(.+)$/m);
-  if (nameMatch?.[1]) fm.name = nameMatch[1].trim();
-
-  // Extract description (may be multi-line with | syntax)
-  const descMatch = raw.match(
-    /^description:\s*\|?\s*\n([\s\S]*?)(?=\n[a-z][\w-]*:|\n?$)/m,
-  );
-  if (descMatch?.[1]) {
-    fm.description = descMatch[1].trim();
-  } else {
-    const singleDescMatch = raw.match(/^description:\s*(.+)$/m);
-    if (singleDescMatch?.[1]) fm.description = singleDescMatch[1].trim();
+  for (const key of ['name', 'description']) {
+    const value = data[key];
+    if (typeof value === 'string') fm[key] = value.trim();
   }
 
   return fm;
